@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Experience | Yogita Shelke</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            background-color: #0f172a; /* Slate 900 */
+        }
+
+        #particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .glowing-text {
+            background: linear-gradient(to right, #a855f7, #ec4899, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 0px 20px rgba(236, 72, 153, 0.5);
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.5;
+            z-index: 0;
+            animation: blob-move 10s infinite alternate;
+        }
+
+        @keyframes blob-move {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.2) translate(50px, -50px); }
+        }
+    </style>
+</head>
+
+<body class="w-screen h-screen relative flex items-center justify-center text-white">
+
+    <!-- Background glowing blobs -->
+    <div class="blob w-96 h-96 bg-purple-600 rounded-full top-10 left-10"></div>
+    <div class="blob w-[30rem] h-[30rem] bg-pink-600 rounded-full bottom-10 right-10" style="animation-delay: -5s;"></div>
+    <div class="blob w-80 h-80 bg-blue-600 rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+
+    <!-- Canvas for Particle System -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Foreground Content -->
+    <div class="relative z-10 glass-panel rounded-3xl p-10 md:p-16 max-w-2xl text-center flex flex-col items-center">
+        <div class="w-24 h-24 mb-6 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center p-1 shadow-2xl shadow-purple-500/50">
+            <div class="w-full h-full bg-slate-900 rounded-full border-2 border-slate-800 flex items-center justify-center">
+                <i class="fas fa-magic text-3xl text-pink-400"></i>
+            </div>
+        </div>
+        
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight">
+            Discover the <br>
+            <span class="glowing-text">Interactive Web</span>
+        </h1>
+        
+        <p class="text-slate-300 text-lg md:text-xl mb-8 leading-relaxed max-w-lg">
+            Move your cursor across the screen to interact with the particle field. Experience the fusion of art, code, and imagination.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+            <button class="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition-all font-semibold tracking-wide flex items-center justify-center group" onclick="randomizeParticles()">
+                <i class="fas fa-random mr-2 group-hover:rotate-180 transition-transform duration-500"></i> Change Style
+            </button>
+            <a href="index.html" class="px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-500 hover:to-pink-400 transition-all font-semibold tracking-wide flex items-center justify-center shadow-lg shadow-purple-500/30 hover:shadow-pink-500/50 hover:scale-105 transform group">
+                <i class="fas fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i> Back to Home
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray = [];
+        let mouse = {
+            x: null,
+            y: null,
+            radius: 150
+        }
+
+        window.addEventListener('mousemove', function(event) {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+
+        // Ensure canvas clears mouse on leave
+        window.addEventListener('mouseout', function() {
+            mouse.x = undefined;
+            mouse.y = undefined;
+        });
+
+        const colors = [
+            '#a855f7', // Purple
+            '#ec4899', // Pink
+            '#3b82f6', // Blue
+            '#06b6d4'  // Cyan
+        ];
+
+        class Particle {
+            constructor(x, y, size, color, weight) {
+                this.x = x;
+                this.y = y;
+                this.baseX = this.x;
+                this.baseY = this.y;
+                this.size = size;
+                this.color = color;
+                this.weight = weight;
+                this.density = (Math.random() * 30) + 1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+            update() {
+                // Return to base position
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                
+                // Repel from mouse
+                let forceDirectionX = dx / distance;
+                let forceDirectionY = dy / distance;
+                let maxDistance = mouse.radius;
+                let force = (maxDistance - distance) / maxDistance;
+                let directionX = forceDirectionX * force * this.density;
+                let directionY = forceDirectionY * force * this.density;
+
+                if (distance < mouse.radius) {
+                    this.x -= directionX;
+                    this.y -= directionY;
+                } else {
+                    if (this.x !== this.baseX) {
+                        let dx = this.x - this.baseX;
+                        this.x -= dx / 10;
+                    }
+                    if (this.y !== this.baseY) {
+                        let dy = this.y - this.baseY;
+                        this.y -= dy / 10;
+                    }
+                }
+                this.draw();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            
+            // Limit particles for performance
+            if (numberOfParticles > 500) numberOfParticles = 500;
+
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 3) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let color = colors[Math.floor(Math.random() * colors.length)];
+                let weight = 1;
+                particlesArray.push(new Particle(x, y, size, color, weight));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect();
+            requestAnimationFrame(animate);
+        }
+
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + 
+                                   ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                        opacityValue = 1 - (distance / 20000);
+                        ctx.strokeStyle = 'rgba(255,255,255,' + opacityValue * 0.2 + ')';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function randomizeParticles() {
+            init();
+        }
+
+        init();
+        animate();
+    </script>
+</body>
+
+</html>

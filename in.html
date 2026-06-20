@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Yogita (Patlinbi) ❤️</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Great+Vibes&family=Mukta:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           RESET & BASE STYLES
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #ff758c, #ff7eb3, #ff9a9e, #fecfef);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Mukta', 'Poppins', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+            line-height: 1.6;
+            perspective: 1000px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1, h2, h3 {
+            font-weight: 800;
+            text-align: center;
+            color: #b71c1c;
+            text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6);
+        }
+
+        .romantic-font {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            color: #880e4f;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.15);
+        }
+
+        p {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+            color: #4a148c;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 3D Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 
+                        inset 0 0 20px rgba(255, 255, 255, 0.5);
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px) rotateX(2deg) scale(1.01);
+            box-shadow: 0 25px 50px rgba(216, 27, 96, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .sticker-container {
+            font-size: 100px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: float3D 4s ease-in-out infinite;
+            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.2));
+            user-select: none;
+        }
+
+        /* Shayari Boxes */
+        .shayari-box {
+            background: linear-gradient(135deg, rgba(255,192,203,0.7), rgba(255,255,255,0.9));
+            border-left: 6px solid #e91e63;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            font-style: italic;
+            font-size: 1.4rem;
+            color: #880e4f;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            transform-style: preserve-3d;
+        }
+
+        .nicknames {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .badge {
+            background: linear-gradient(45deg, #ff4081, #e91e63);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        /* Interactive Love Question Section */
+        .love-section {
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+            position: relative;
+            width: 100%;
+            justify-content: center;
+            height: 100px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s all;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-yes {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            background-color: #45a049;
+        }
+
+        .btn-no {
+            background-color: #f44336;
+            color: white;
+            position: absolute;
+            transition: 0.2s ease;
+        }
+
+        #success-msg {
+            display: none;
+            text-align: center;
+            animation: fadeIn 1s;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 50px 20px;
+            color: #880e4f;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float3D {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .falling-element {
+            position: fixed;
+            top: -10vh;
+            z-index: 100;
+            pointer-events: none;
+            animation: fall3D linear forwards;
+        }
+
+        @keyframes fall3D {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 480px) {
+            .romantic-font { font-size: 2.5rem; }
+            .sticker-container { font-size: 80px; }
+            .glass-card { padding: 20px; }
+            .btn { padding: 10px 30px; font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="glass-card hero">
+            <div class="sticker-container">🐒</div> 
+            <h1 class="romantic-font">Happy Birthday Yogita</h1>
+            <h2>माझी Yoge… माझी Patlinbi… ❤️🎂</h2>
+        </div>
+
+        <div class="glass-card">
+            <p><strong>आजचा दिवस माझ्यासाठी खूप खास आहे…</strong></p>
+            <p>कारण आज त्या व्यक्तीचा वाढदिवस आहे जी माझ्यासाठी Best Friend, Girlfriend, Family, आणि माझं सगळंच काही आहे… 💖</p>
+            <p>2022 मध्ये आपण भेटलो… आणि त्या दिवसापासून आजपर्यंत… आपण एकमेकांमध्ये जगतोय… 🌍❤️</p>
+            <p>देवाने आपल्याला Diploma कॉलेजला भेटवलं… Engineering मध्ये पण सोबत ठेवलं… 🙏✨</p>
+            <p>आणि मला पूर्ण विश्वास आहे… आपण कायम सोबत राहणार… हे देवाचं प्लॅन आहे… ❤️</p>
+        </div>
+
+        <div class="glass-card">
+            <h3 style="margin-bottom: 25px; font-size: 2rem;">💖 Shayari for my Love…</h3>
+            <div class="shayari-box">
+                “तुझ्या नावाने सुरू होतो माझा प्रत्येक दिवस,<br>
+                आणि तुझ्याच विचारात संपतो माझा प्रत्येक श्वास… 💕”
+            </div>
+            <div class="shayari-box">
+                “तुझं माझ्यावरचं प्रेम असं आहे,<br>
+                जसं चंद्राचं आकाशावर… 🌙<br>दिसतं कमी, पण असतं कायम… 💖”
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h3 style="margin-bottom: 15px; font-size: 2rem;">😂❤️ माझी लाडकी...</h3>
+            <div class="nicknames">
+                <span class="badge">Yoge 💖</span>
+                <span class="badge">Butti 🐣</span>
+                <span class="badge">Makdin 🐒</span>
+                <span class="badge">Maggi 🍜</span>
+                <span class="badge">Gungel Kombadi 🐔</span>
+                <span class="badge">Gangubai 😎</span>
+                <span class="badge">Patlinbi 👑</span>
+            </div>
+        </div>
+
+        <div class="glass-card love-section" id="question-card">
+            <h2 id="love-ques" style="font-size: 2.2rem; margin-bottom: 20px;">Do You Love Me? 🥺❤️</h2>
+            
+            <div class="btn-group" id="btn-container">
+                <button class="btn btn-yes" onclick="showLove()">Yes! 😍</button>
+                <button class="btn btn-no" id="no-btn" onmouseover="moveNo()" onclick="moveNo()" ontouchstart="moveNo()">No 😢</button>
+            </div>
+
+            <div id="success-msg">
+                <h2 class="romantic-font" style="font-size: 3rem;">I knew it! ❤️</h2>
+                <p style="font-size: 1.5rem; color: #d81b60;">Thank you for being mine forever! 😍✨<br>खूप प्रेम आहे ग तुझ्यावर... ❤️♾️</p>
+                <div style="font-size: 50px;">🥰💖🌹</div>
+            </div>
+        </div>
+
+        <div class="glass-card" style="text-align: center; border: 3px solid #ff4081;">
+            <h2 class="romantic-font">Happy Birthday Patlinbi… ❤️</h2>
+            <p style="font-size: 1.8rem; font-weight: 800; color: #c2185b;">I love you forever… 💞</p>
+            <p>Forever म्हणजे खरंच Forever… ♾️❤️</p>
+        </div>
+
+        <div class="footer">
+            <p class="romantic-font" style="font-size: 3rem;">फक्त तुझा,</p>
+            <p style="font-size: 2.5rem; font-weight: 800; color: #b71c1c;">Gaurav ❤️</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Falling elements animation
+        document.addEventListener("DOMContentLoaded", () => {
+            const symbols = ["❤️", "💖", "🌸", "✨", "💕", "🎂", "🐒", "👑"];
+            function createFallingElement() {
+                const element = document.createElement("div");
+                element.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                element.classList.add("falling-element");
+                element.style.left = Math.random() * 100 + "vw";
+                element.style.fontSize = Math.random() * 30 + 20 + "px";
+                element.style.animationDuration = Math.random() * 3 + 5 + "s";
+                document.body.appendChild(element);
+                setTimeout(() => { element.remove(); }, 8000);
+            }
+            setInterval(createFallingElement, 300);
+        });
+
+        // Function to move the "No" button
+        function moveNo() {
+            const noBtn = document.getElementById('no-btn');
+            const container = document.getElementById('btn-container');
+            
+            // Get container dimensions
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
+
+            // Generate random positions within the container
+            // We subtract button width/height to keep it inside
+            const newX = Math.random() * (containerWidth - noBtn.offsetWidth);
+            const newY = Math.random() * (containerHeight - noBtn.offsetHeight);
+
+            // Set new position
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+        }
+
+        // Function when "Yes" is clicked
+        function showLove() {
+            document.getElementById('love-ques').style.display = 'none';
+            document.getElementById('btn-container').style.display = 'none';
+            document.getElementById('success-msg').style.display = 'block';
+            
+            // Celebration effect: extra hearts!
+            for(let i=0; i<30; i++) {
+                setTimeout(createExplosionHeart, i * 50);
+            }
+        }
+
+        function createExplosionHeart() {
+            const element = document.createElement("div");
+            element.innerText = "❤️";
+            element.classList.add("falling-element");
+            element.style.left = Math.random() * 100 + "vw";
+            element.style.fontSize = "40px";
+            element.style.animationDuration = "2s";
+            document.body.appendChild(element);
+        }
+    </script>
+</body>
+</html>
